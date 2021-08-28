@@ -1,6 +1,9 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+        <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'></link>  
         <title>
             To-Do List Manager
         </title>
@@ -60,10 +63,14 @@
                 background-color: lightpink;
                 margin-left: 5px;
             }
+            .fas{
+                margin-left: 100px;
+            }
         </style>
     </head>
     <body>
         <button onclick="addField()" id="button-add">Add New</button>
+        <i class="fas fa-info-circle fa-1x" onclick="showhow()"></i>
         <br>
         <div id="data">
             <ul id="list"></ul>
@@ -159,7 +166,14 @@
                 var newbe = document.getElementById("del_"+fir);
                 newbe.setAttribute("value",localStorage.getItem("value_"+fir));
             }
-           
+            function showhow(){
+                swal({  
+                    title: "To Do List Manager",  
+                    text: "It is a to do list add your task and remove after compeleted",  
+                    icon: "success",  
+                    button: "ok",  
+                });  
+            }
         </script>
     </body>
 </html>
