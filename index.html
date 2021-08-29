@@ -50,10 +50,12 @@
                 font-weight: bold;
                 color:green;
                 background-color: lightgreen;
+                margin-bottom: 5px;
+                margin-left: 5px;
             }
             #collection{
                 padding:5px;
-                margin:0px;
+                margin-left: -5px;
             }
             .completo{
                 padding:5px;
@@ -64,9 +66,28 @@
                 color:red;
                 background-color: lightpink;
                 margin-left: 5px;
+                margin-top: 5px;
             }
             .fas{
                 margin-left: 100px;
+            }
+            .notify{
+                padding: 10px;
+                margin-top: 10px;
+                background-color: lightblue;
+                border-radius: 5px;
+                color: mediumblue;
+                font-weight: bolder;
+                font-size: larger;
+                width: 200px;
+            }
+            .fa-bell {
+                margin-left: 10px;
+                font-size: 20px;
+            }
+            .fa-bell-slash {
+                margin-left: 10px;
+                font-size: 20px;
             }
         </style>
     </head>
@@ -78,6 +99,16 @@
             <ul id="list"></ul>
         </div>
         <script>
+            navigator.serviceWorker.register('sw.js');
+            Notification.requestPermission().then(function (permission) {
+                            // If the user accepts, let's create a notification
+                            if (permission === "granted") {
+                            console.log(permission);
+                            }
+                            else{
+                                console.log(permission);
+                            }
+                        });
             var clicks = 0;
             function addField(){
                 clicks = localStorage.getItem("count");
@@ -86,13 +117,23 @@
                 var li = document.createElement("LI");
                 var can = document.createElement("DIV");
                 var spacess = document.createElement("BR");
+                var spaces = document.createElement("BR");
                 var create = document.createElement("INPUT");
                 var cancel = document.createElement("INPUT");
                 var writes = document.createElement("INPUT");
+                var note = document.createElement("INPUT");
+                var alarm = document.createElement("I");
                 create.setAttribute("type","text");
                 create.setAttribute("class",'dell');
                 create.setAttribute("id",'del_'+clicks);
                 create.setAttribute("placeholder","enter task "+clicks);
+                note.setAttribute("type","date");
+                note.setAttribute("class","notify");
+                note.setAttribute("id","niti_"+clicks);
+                note.setAttribute("min","2000-01-01");
+                note.setAttribute("max","2100-01-01");
+                alarm.setAttribute("class","far far fa-bell-slash");
+                alarm.setAttribute("id","ring_"+clicks);
                 cancel.setAttribute("type","button");
                 cancel.setAttribute("value","completed");
                 cancel.setAttribute("class","completo");
@@ -103,6 +144,9 @@
                 writes.setAttribute("id","create_task");
                 ul.appendChild(li);
                 li.appendChild(create);
+                li.appendChild(spaces);
+                li.appendChild(note);
+                li.appendChild(alarm);
                 li.appendChild(spacess);
                 can.appendChild(writes);
                 can.appendChild(cancel);
@@ -117,13 +161,23 @@
                 var li = document.createElement("LI");
                 var can = document.createElement("DIV");
                 var spacess = document.createElement("BR");
+                var spaces = document.createElement("BR");
                 var create = document.createElement("INPUT");
                 var cancel = document.createElement("INPUT");
                 var writes = document.createElement("INPUT");
+                var note = document.createElement("INPUT");
+                var alarm = document.createElement("I");
                 create.setAttribute("type","text");
                 create.setAttribute("class",'dell');
                 create.setAttribute("id",'del_'+val);
                 create.setAttribute("placeholder","enter task "+val);
+                note.setAttribute("type","date");
+                note.setAttribute("class","notify");
+                note.setAttribute("id","niti_"+val);
+                note.setAttribute("min","2000-01-01");
+                note.setAttribute("max","2100-01-01");
+                alarm.setAttribute("class","far far fa-bell-slash");
+                alarm.setAttribute("id","ring_"+val);
                 cancel.setAttribute("type","button");
                 cancel.setAttribute("value","completed");
                 cancel.setAttribute("class","completo");
@@ -134,6 +188,9 @@
                 writes.setAttribute("id","create_task");
                 ul.appendChild(li);
                 li.appendChild(create);
+                li.appendChild(spaces);
+                li.appendChild(note);
+                li.appendChild(alarm);
                 li.appendChild(spacess);
                 can.appendChild(writes);
                 can.appendChild(cancel);
@@ -149,6 +206,47 @@
                     user(i);
                 });
             });
+            [...document.querySelectorAll('.fa-bell-slash')].forEach(function(item,i){
+                item.addEventListener('click',function(){
+                    set(i);
+                });
+            });
+            [...document.querySelectorAll('.notify')].forEach(function(item,i){
+                item.addEventListener('input',function(){
+                    work(i);
+                });
+            });
+            function work(i){
+                var weq = i+1;
+                var ebu = document.getElementById("niti_"+weq).value;
+                localStorage.setItem("task-time_"+weq,ebu);
+            }
+            function set(i){
+                var ryu = i+1;
+                var ringo = document.getElementById("ring_"+ryu);
+                ringo.setAttribute("class","far fa-bell");
+                localStorage.setItem("slash",ryu);
+                if(document.getElementById("ring_"+ryu).className==="far fa-bell"){
+                    navigator.serviceWorker.ready.then(function(registration) {
+                        var option = {
+                        body: 'Alarm set!',
+                        icon: 'https://cdn0.iconfinder.com/data/icons/user-interface-mono-set/512/user-interface-remainder-notification-warning-remainder-1024.png',
+                        tag: 'Filora notify',
+                        badge: 'https://cdn0.iconfinder.com/data/icons/user-interface-mono-set/512/user-interface-remainder-notification-warning-remainder-1024.png',
+                        vibrate: [200, 100, 200, 100, 200, 100, 200],
+                        requireInteraction: true,
+                        actions: [
+                            {
+                              action: 'show',
+                              title: '✔ OPEN'
+                            }
+                          ],
+                      };
+                      registration.showNotification('TO-DO', option);
+                  });
+                }
+                location.reload();
+            }
             function user(i){
                 var cer = i+1;
                 var x = document.getElementById("del_"+cer).value;
@@ -160,14 +258,60 @@
                 ele.setAttribute("class","animate__animated animate__fadeOutRight")
                 setTimeout(function(){ ele.remove(); }, 1000);
                 var news = localStorage.getItem("count");
+                var newi = localStorage.getItem("slash");
                 news--;
+                newi--;
                 localStorage.setItem("count",news);
+                localStorage.setItem("slash",newi);
                 localStorage.removeItem("value_"+che);
+                localStorage.removeItem("task-time_"+che);
             }
             for(var i =0;i<localStorage.getItem("count");i++){
                 var fir = i+1;
                 var newbe = document.getElementById("del_"+fir);
                 newbe.setAttribute("value",localStorage.getItem("value_"+fir));
+            }
+            for(var i =0;i<localStorage.getItem("count");i++){
+                var fir = i+1;
+                var newbo = document.getElementById("niti_"+fir);
+                newbo.setAttribute("value",localStorage.getItem("task-time_"+fir));
+            }
+            for(var i =0;i<localStorage.getItem("slash");i++){
+                var fir = i+1;
+                var newby = document.getElementById("ring_"+fir);
+                newby.setAttribute("class","far fa-bell");
+            }
+            [...document.querySelectorAll('.fa-bell')].forEach(function(item,i){
+                item.addEventListener('click',function(){
+                    var reb = i+1;
+                    reset(reb);
+                });
+            });
+            function reset(reb){
+                var rew = document.getElementById("ring_"+reb);
+                rew.setAttribute("class","far fa-bell-slash");
+                var tyu = localStorage.getItem("slash");
+                tyu--;
+                localStorage.setItem("slash",tyu);
+                if(document.getElementById("ring_"+reb).className==="far fa-bell-slash"){
+                    navigator.serviceWorker.ready.then(function(registration) {
+                        var option = {
+                        body: 'Alarm Removed!',
+                        icon: 'https://cdn0.iconfinder.com/data/icons/user-interface-mono-set/512/user-interface-remainder-notification-warning-remainder-1024.png',
+                        tag: 'Filora notify',
+                        badge: 'https://cdn0.iconfinder.com/data/icons/user-interface-mono-set/512/user-interface-remainder-notification-warning-remainder-1024.png',
+                        vibrate: [200, 100, 200, 100, 200, 100, 200],
+                        requireInteraction: true,
+                        actions: [
+                            {
+                              action: 'show',
+                              title: '✔ OPEN'
+                            }
+                          ],
+                      };
+                      registration.showNotification('TO-DO', option);
+                  });
+                }
             }
             function showhow(){
                 swal({  
