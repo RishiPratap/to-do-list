@@ -3,7 +3,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
-        <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'></link>  
+        <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'></link>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>  
         <title>
             To-Do List Manager
         </title>
@@ -156,7 +157,8 @@
             function forward(i){
                 var che = i+1;
                 var ele = document.getElementById("delete_"+che);
-                setTimeout(function(){ ele.remove(); }, 500);
+                ele.setAttribute("class","animate__animated animate__fadeOutRight")
+                setTimeout(function(){ ele.remove(); }, 1000);
                 var news = localStorage.getItem("count");
                 news--;
                 localStorage.setItem("count",news);
