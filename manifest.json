@@ -1,0 +1,29 @@
+{
+    "name":"TO-DO List",
+    "short_name":"TO-DO List",
+    "description": "TO-DO List Add Your Task And after Completed",
+    "scope": "/",
+    "icons":[{"src":"icon (1).png","sizes":"192x192","type":"image/png"},
+             {"src":"icon (2).png","sizes":"512x512","type":"image/png"}],
+    "theme_color": "#b3c2f9",
+    "background_color": "#FFFFFF",
+    "start_url": "/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "shortcuts": [
+        {
+          "name": "OPEN TO-DO",
+          "short_name": "OPEN",
+          "description": "Open shortcut",
+          "url": "/",
+          "icons": [{ "src": "icon (1).png", "sizes": "192x192" }]
+        }
+      ],
+      "screenshots" : [
+        {
+          "src": "screenshot.png",
+          "sizes": "750x1333",
+          "type": "image/png"
+        }
+      ]
+}

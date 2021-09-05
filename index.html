@@ -1,6 +1,7 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="manifest" href="manifest.json" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
         <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'></link>
@@ -69,7 +70,7 @@
                 margin-top: 5px;
             }
             .fas{
-                margin-left: 100px;
+                margin-left: 30px;
             }
             .notify{
                 padding: 10px;
@@ -89,17 +90,45 @@
                 margin-left: 10px;
                 font-size: 20px;
             }
+            .fa-arrow-circle-down{
+                margin: 0px;
+            }
+            .download{
+                border: 1px solid black;
+                border-radius: 10px;
+                background-color: lightskyblue;
+                color: black;
+                font-weight: bold;
+                font-family: cursive;
+            }
         </style>
     </head>
     <body>
         <button onclick="addField()" id="button-add">Add New</button>
         <i class="fas fa-info-circle fa-1x" onclick="showhow()"></i>
+        <span class="download" id="installApp"><i class="fas fa-arrow-circle-down"></i> Install App</span>
         <br>
         <div id="data">
             <ul id="list"></ul>
         </div>
         <script>
             navigator.serviceWorker.register('sw.js');
+
+            let deferredPrompt;
+            window.addEventListener('beforeinstallprompt', (e) => {
+	        e.preventDefault();
+            deferredPrompt = e;
+            });
+            const installApp = document.getElementById('installApp');
+            installApp.addEventListener('click', async () => {
+            if (deferredPrompt !== null) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            if (outcome === 'accepted') {
+            deferredPrompt = null;
+        }
+    }
+});
             Notification.requestPermission().then(function (permission) {
                             // If the user accepts, let's create a notification
                             if (permission === "granted") {
