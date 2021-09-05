@@ -100,6 +100,16 @@
                 color: black;
                 font-weight: bold;
                 font-family: cursive;
+                visibility: collapse;
+            }
+            .download-ae{
+                border: 1px solid black;
+                border-radius: 10px;
+                background-color: lightskyblue;
+                color: black;
+                font-weight: bold;
+                font-family: cursive;
+                visibility: revert;
             }
         </style>
     </head>
@@ -117,6 +127,7 @@
             let deferredPrompt;
             window.addEventListener('beforeinstallprompt', (e) => {
 	        e.preventDefault();
+            document.getElementById("installApp").setAttribute("class","download-ae");
             deferredPrompt = e;
             });
             const installApp = document.getElementById('installApp');
