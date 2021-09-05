@@ -99,23 +99,16 @@
                 background-color: lightskyblue;
                 color: black;
                 font-weight: bold;
+                width: 50%;
                 font-family: cursive;
-                visibility: collapse;
-            }
-            .download-ae{
-                border: 1px solid black;
-                border-radius: 10px;
-                background-color: lightskyblue;
-                color: black;
-                font-weight: bold;
-                font-family: cursive;
-                visibility: revert;
+                display: none;
             }
         </style>
     </head>
     <body>
         <button onclick="addField()" id="button-add">Add New</button>
         <i class="fas fa-info-circle fa-1x" onclick="showhow()"></i>
+        <br>
         <span class="download" id="installApp"><i class="fas fa-arrow-circle-down"></i> Install App</span>
         <br>
         <div id="data">
@@ -127,7 +120,7 @@
             let deferredPrompt;
             window.addEventListener('beforeinstallprompt', (e) => {
 	        e.preventDefault();
-            document.getElementById("installApp").setAttribute("class","download-ae");
+            document.getElementById("installApp").style.display="block";
             deferredPrompt = e;
             });
             const installApp = document.getElementById('installApp');
