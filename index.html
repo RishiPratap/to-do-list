@@ -94,14 +94,17 @@
                 margin: 0px;
             }
             .download{
-                border: 1px solid black;
+                border: 2px solid black;
                 border-radius: 10px;
                 background-color: lightskyblue;
                 color: black;
                 font-weight: bold;
-                width: 50%;
+                width: 40%;
+                margin-top: -40px;
+                margin-left: 180px;
                 font-family: cursive;
                 display: none;
+                cursor: pointer;
             }
         </style>
     </head>
@@ -133,6 +136,9 @@
         }
     }
 });
+            window.addEventListener('appinstalled', async function(e) {
+            document.getElementById("installApp").style.display = "none";
+            });
             Notification.requestPermission().then(function (permission) {
                             // If the user accepts, let's create a notification
                             if (permission === "granted") {
