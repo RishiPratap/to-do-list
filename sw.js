@@ -4,6 +4,7 @@ const assets = [
   "index.html",
   "manifest.json",
   "sw.js",
+  "icon.png",
   "icon (1).png",
   "icon (2).png",
   "screenshot.png"
