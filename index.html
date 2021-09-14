@@ -10,9 +10,6 @@
             To-Do List Manager
         </title>
         <style>
-            *{
-                padding:10px;
-            }
             body{
                 padding:10px;
                 margin:0px;
@@ -99,8 +96,9 @@
                 background-color: lightskyblue;
                 color: black;
                 font-weight: bold;
-                width: 40%;
-                margin-top: -40px;
+                width: 140px;
+                padding:5px;
+                margin-top: -30px;
                 margin-left: 180px;
                 font-family: cursive;
                 display: none;
@@ -112,7 +110,8 @@
         <button onclick="addField()" id="button-add">Add New</button>
         <i class="fas fa-info-circle fa-1x" onclick="showhow()"></i>
         <br>
-        <span class="download" id="installApp"><i class="fas fa-arrow-circle-down"></i> Install App</span>
+        <button class="download" id="installApp"><i class="fas fa-arrow-circle-down"></i> Install App</button>
+        
         <br>
         <div id="data">
             <ul id="list"></ul>
