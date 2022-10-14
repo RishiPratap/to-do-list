@@ -1,7 +1,7 @@
 {
-    "name":"TO-DO List",
-    "short_name":"TO-DO List",
-    "description": "TO-DO List Add Your Task And after Completed",
+    "name":"Task Manager",
+    "short_name":"Task Manager",
+    "description": "Task Manager manages your tasks",
     "scope": "/",
     "icons":[{"src":"icon (1).png","sizes":"192x192","type":"image/png"},
              {"src":"icon (2).png","sizes":"512x512","type":"image/png"}],
@@ -12,9 +12,9 @@
     "orientation": "portrait",
     "shortcuts": [
         {
-          "name": "OPEN TO-DO",
+          "name": "OPEN",
           "short_name": "OPEN",
-          "description": "Open shortcut",
+          "description": "Open Shortcut",
           "url": "/",
           "icons": [{ "src": "icon (1).png", "sizes": "192x192" }]
         }
