@@ -1,0 +1,428 @@
+<html>
+    <head>
+        <link rel="icon" href="https://img.icons8.com/external-becris-lineal-color-becris/344/external-task-business-management-becris-lineal-color-becris.png" type="image/png">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="manifest" href="manifest.json" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+        <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'></link>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>  
+        <title>
+            To-Do List Manager
+        </title>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
+            body{
+                padding:10px;
+                margin:0px;
+                font-family: 'Ubuntu', sans-serif;
+                background: #25163d;
+                color: orange;
+            }
+            ul{
+                list-style-type: none;
+                padding: 10px;
+            }
+            li{
+                padding:10px;
+            }
+            #nav{
+                text-align: center;
+            }
+            #data{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                margin-bottom:20px;
+            }
+            #list{
+                text-align: center;
+                backdrop-filter: blur(0);
+                -webkit-backdrop-filter: blur(0);
+                background: hsla(0,0%,100%,.19);
+                border: 1px solid hsla(0,0%,100%,.14);
+                border-radius: 20px;
+                box-shadow: 0 0 20px 0 #fff;
+                width: 50vh;
+            }
+            #button-add{
+                padding:5px;
+                border-radius:5px;
+                width: 100px;
+                font-weight: bold;
+                color:green;
+                background-color: lightgreen;
+                font-family: 'Ubuntu', sans-serif;
+            }
+            .dell{
+                width:250px;
+                height:50px;
+                padding:10px;
+                border-radius:5px;
+                text-overflow: ellipsis;
+                font-weight: bolder;
+                font-size: larger;
+                color:green;
+                background-color: lightgreen;
+            }
+            input#create_task{
+                padding:5px;
+                border-radius:5px;
+                font-size: large;
+                width: 100px;
+                font-weight: bold;
+                color:green;
+                background-color: lightgreen;
+                margin-bottom: 5px;
+                margin-left: 5px;
+                font-family: 'Ubuntu', sans-serif;
+            }
+            #collection{
+                padding:5px;
+                margin-left: -5px;
+
+            }
+            input::placeholder {
+                font-family: 'Ubuntu', sans-serif;
+            }
+            .completo{
+                padding:5px;
+                border-radius:5px;
+                font-size: large;
+                width: 140px;
+                font-weight: bold;
+                color:red;
+                background-color: lightpink;
+                margin-left: 5px;
+                margin-top: 5px;
+                font-family: 'Ubuntu', sans-serif;
+            }
+            .fas{
+                margin-left: 30px;
+            }
+            .notify{
+                padding: 10px;
+                margin-top: 10px;
+                background-color: lightblue;
+                border-radius: 5px;
+                color: mediumblue;
+                font-weight: bolder;
+                font-size: larger;
+                width: 200px;
+            }
+            .fa-bell {
+                margin-left: 10px;
+                font-size: 20px;
+            }
+            .fa-bell-slash {
+                margin-left: 10px;
+                font-size: 20px;
+            }
+            .fa-arrow-circle-down{
+                margin: 0px;
+            }
+            .download{
+                border: 2px solid black;
+                background-color: lightskyblue;
+                color: black;
+                font-size: 14px;
+                font-weight: bold;
+                position: fixed;
+                width: 150px;
+                height: 50px;
+                bottom: 0;
+                right: 0;
+                margin: 10px 10px;
+                border-radius: 50px;
+                font-family: 'Ubuntu', sans-serif;
+                display: none;
+                cursor: pointer;
+                z-index: 1;
+            }
+            .fa-arrow-circle-down{
+                margin: 5px;
+                font-size: 14px;
+            }
+            .Explore {
+            -webkit-animation: anime 16s linear infinite;
+            animation: anime 16s linear infinite;
+            background: linear-gradient(-45deg,#ffa63d,#ff3d77,#338aff,#3cf0c5);
+            background-size: 600%;
+            border-radius: 50%;
+            color: hsla(0,0%,100%,.9);
+            -webkit-filter: blur(100px);
+            filter: blur(100px);
+            height: 250px;
+            line-height: 100px;
+            opacity: .8;
+            position: absolute;
+            text-align: center;
+            width: 250px;
+            z-index: -1;
+        }
+        </style>
+    </head>
+    <body>
+        <div id="nav">
+            <h1>Task Manager</h1>
+            <br>
+        <button onclick="addField()" id="button-add">Add New Task</button>
+        <i class="fas fa-info-circle fa-1x" onclick="showhow()"></i>
+        <br>
+        <button class="download" id="installApp"><i class="fas fa-arrow-circle-down"></i> Install App</button>
+        </div>
+        <div class="Explore"></div>
+        <br>
+        <div id="data">
+            <ul id="list"></ul>
+        </div>
+        <script>
+            navigator.serviceWorker.register('sw.js');
+            if(localStorage.getItem('count')==0){
+                document.getElementById('list').innerText = 'No Tasks Added';
+            }
+            let deferredPrompt;
+            window.addEventListener('beforeinstallprompt', (e) => {
+	        e.preventDefault();
+            document.getElementById("installApp").style.display="block";
+            deferredPrompt = e;
+            });
+            const installApp = document.getElementById('installApp');
+            installApp.addEventListener('click', async () => {
+            if (deferredPrompt !== null) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            if (outcome === 'accepted') {
+            deferredPrompt = null;
+        }
+    }
+});
+            window.addEventListener('appinstalled', async function(e) {
+            document.getElementById("installApp").style.display = "none";
+            });
+            Notification.requestPermission().then(function (permission) {
+                            // If the user accepts, let's create a notification
+                            if (permission === "granted") {
+                            console.log(permission);
+                            }
+                            else{
+                                console.log(permission);
+                            }
+                        });
+            var clicks = 0;
+            function addField(){
+                clicks = localStorage.getItem("count");
+                clicks++;
+                var ul = document.getElementById("list");
+                var li = document.createElement("LI");
+                var can = document.createElement("DIV");
+                var spacess = document.createElement("BR");
+                var spaces = document.createElement("BR");
+                var create = document.createElement("INPUT");
+                var cancel = document.createElement("INPUT");
+                var writes = document.createElement("INPUT");
+                var note = document.createElement("INPUT");
+                var alarm = document.createElement("I");
+                create.setAttribute("type","text");
+                create.setAttribute("class",'dell');
+                create.setAttribute("id",'del_'+clicks);
+                create.setAttribute("placeholder","enter task "+clicks);
+                note.setAttribute("type","date");
+                note.setAttribute("class","notify");
+                note.setAttribute("id","niti_"+clicks);
+                note.setAttribute("min","2000-01-01");
+                note.setAttribute("max","2100-01-01");
+                alarm.setAttribute("class","far far fa-bell-slash");
+                alarm.setAttribute("id","ring_"+clicks);
+                cancel.setAttribute("type","button");
+                cancel.setAttribute("value","completed");
+                cancel.setAttribute("class","completo");
+                can.setAttribute("id","collection");
+                li.setAttribute("id","delete_"+clicks);
+                writes.setAttribute("type","button");
+                writes.setAttribute("value",'ok');
+                writes.setAttribute("id","create_task");
+                ul.appendChild(li);
+                li.appendChild(create);
+                li.appendChild(spaces);
+                li.appendChild(note);
+                li.appendChild(alarm);
+                li.appendChild(spacess);
+                can.appendChild(writes);
+                can.appendChild(cancel);
+                li.appendChild(can);
+                localStorage.setItem("count",clicks);
+                localStorage.setItem("value_"+clicks,"");
+                location.reload();
+            }
+            for(var i =0;i<localStorage.getItem("count");i++){
+                var val = i+1;
+                var ul = document.getElementById("list");
+                var li = document.createElement("LI");
+                var can = document.createElement("DIV");
+                var spacess = document.createElement("BR");
+                var spaces = document.createElement("BR");
+                var create = document.createElement("INPUT");
+                var cancel = document.createElement("INPUT");
+                var writes = document.createElement("INPUT");
+                var note = document.createElement("INPUT");
+                var alarm = document.createElement("I");
+                create.setAttribute("type","text");
+                create.setAttribute("class",'dell');
+                create.setAttribute("id",'del_'+val);
+                create.setAttribute("placeholder","enter task "+val);
+                note.setAttribute("type","date");
+                note.setAttribute("class","notify");
+                note.setAttribute("id","niti_"+val);
+                note.setAttribute("min","2000-01-01");
+                note.setAttribute("max","2100-01-01");
+                alarm.setAttribute("class","far far fa-bell-slash");
+                alarm.setAttribute("id","ring_"+val);
+                cancel.setAttribute("type","button");
+                cancel.setAttribute("value","completed");
+                cancel.setAttribute("class","completo");
+                can.setAttribute("id","collection");
+                li.setAttribute("id","delete_"+val);
+                writes.setAttribute("type","button");
+                writes.setAttribute("value",'ok');
+                writes.setAttribute("id","create_task");
+                ul.appendChild(li);
+                li.appendChild(create);
+                li.appendChild(spaces);
+                li.appendChild(note);
+                li.appendChild(alarm);
+                li.appendChild(spacess);
+                can.appendChild(writes);
+                can.appendChild(cancel);
+                li.appendChild(can);
+            }
+            [...document.querySelectorAll('.completo')].forEach(function(item,i){
+                item.addEventListener('click',function(){
+                    forward(i);
+                });
+            });
+            [...document.querySelectorAll('.dell')].forEach(function(item,i){
+                item.addEventListener('input',function(){
+                    user(i);
+                });
+            });
+            [...document.querySelectorAll('.fa-bell-slash')].forEach(function(item,i){
+                item.addEventListener('click',function(){
+                    set(i);
+                });
+            });
+            [...document.querySelectorAll('.notify')].forEach(function(item,i){
+                item.addEventListener('input',function(){
+                    work(i);
+                });
+            });
+            function work(i){
+                var weq = i+1;
+                var ebu = document.getElementById("niti_"+weq).value;
+                localStorage.setItem("task-time_"+weq,ebu);
+            }
+            function set(i){
+                var ryu = i+1;
+                var ringo = document.getElementById("ring_"+ryu);
+                ringo.setAttribute("class","far fa-bell");
+                localStorage.setItem("slash",ryu);
+                if(document.getElementById("ring_"+ryu).className==="far fa-bell"){
+                    navigator.serviceWorker.ready.then(function(registration) {
+                        var option = {
+                        body: 'Alarm set!',
+                        icon: 'icon.png',
+                        tag: 'Filora notify',
+                        badge: 'icon.png',
+                        vibrate: [200, 100, 200, 100, 200, 100, 200],
+                        requireInteraction: true,
+                        actions: [
+                            {
+                              action: 'show',
+                              title: '✔ OPEN'
+                            }
+                          ],
+                      };
+                      registration.showNotification('TO-DO', option);
+                  });
+                }
+                location.reload();
+            }
+            function user(i){
+                var cer = i+1;
+                var x = document.getElementById("del_"+cer).value;
+                localStorage.setItem("value_"+cer,x);
+            }
+            function forward(i){
+                var che = i+1;
+                var ele = document.getElementById("delete_"+che);
+                ele.setAttribute("class","animate__animated animate__fadeOutRight")
+                setTimeout(function(){ ele.remove(); }, 1000);
+                window.location.reload();
+                var news = localStorage.getItem("count");
+                var newi = localStorage.getItem("slash");
+                news--;
+                newi--;
+                localStorage.setItem("count",news);
+                localStorage.setItem("slash",newi);
+                localStorage.removeItem("value_"+che);
+                localStorage.removeItem("task-time_"+che);
+            }
+            for(var i =0;i<localStorage.getItem("count");i++){
+                var fir = i+1;
+                var newbe = document.getElementById("del_"+fir);
+                newbe.setAttribute("value",localStorage.getItem("value_"+fir));
+            }
+            for(var i =0;i<localStorage.getItem("count");i++){
+                var fir = i+1;
+                var newbo = document.getElementById("niti_"+fir);
+                newbo.setAttribute("value",localStorage.getItem("task-time_"+fir));
+            }
+            for(var i =0;i<localStorage.getItem("slash");i++){
+                var fir = i+1;
+                var newby = document.getElementById("ring_"+fir);
+                newby.setAttribute("class","far fa-bell");
+            }
+            [...document.querySelectorAll('.fa-bell')].forEach(function(item,i){
+                item.addEventListener('click',function(){
+                    var reb = i+1;
+                    reset(reb);
+                });
+            });
+            function reset(reb){
+                var rew = document.getElementById("ring_"+reb);
+                rew.setAttribute("class","far fa-bell-slash");
+                var tyu = localStorage.getItem("slash");
+                tyu--;
+                localStorage.setItem("slash",tyu);
+                if(document.getElementById("ring_"+reb).className==="far fa-bell-slash"){
+                    navigator.serviceWorker.ready.then(function(registration) {
+                        var option = {
+                        body: 'Alarm Removed!',
+                        icon: 'icon.png',
+                        tag: 'Filora notify',
+                        badge: 'icon.png',
+                        vibrate: [200, 100, 200, 100, 200, 100, 200],
+                        requireInteraction: true,
+                        actions: [
+                            {
+                              action: 'show',
+                              title: '✔ OPEN'
+                            }
+                          ],
+                      };
+                      registration.showNotification('TO-DO', option);
+                  });
+                }
+            }
+            function showhow(){
+                swal({  
+                    title: "To Do List Manager",  
+                    text: "It is a to do list add your task and remove after compeleted",  
+                    icon: "success",  
+                    button: "ok",  
+                });  
+            }
+        </script>
+    </body>
+</html>
