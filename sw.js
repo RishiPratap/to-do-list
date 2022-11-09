@@ -1,7 +1,6 @@
 const staticDevCoffee = "cache website";
 const assets = [
   "manifest.json",
-  "sw.js",
   "icon.png",
   "icon (1).png",
   "icon (2).png",
@@ -17,7 +16,7 @@ self.addEventListener("install", installEvent => {
 self.addEventListener("fetch", fetchEvent => {
     fetchEvent.respondWith(
       caches.match(fetchEvent.request).then(res => {
-        return res || fetch(fetchEvent.request)
+        return res;
       })
     )
   }

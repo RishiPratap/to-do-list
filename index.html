@@ -272,41 +272,6 @@
             <ul id="list"></ul>
         </div>
         <script>
-            function run() {
-                var data = document.getElementById("post-body").value;
-                console.log(data);
-                let postObj = { 
-                "sender": data
-                };
-                let post = JSON.stringify(postObj)
-                // Creating Our XMLHttpRequest object 
-                var xhr = new XMLHttpRequest();
-          
-                // Making our connection  
-                var url = 'https://chatbot-engine.azurewebsites.net/messenger';
-                xhr.open('POST', url, true)
-                xhr.setRequestHeader('Content-type', 'application/json; charset=UTF-8')
-                xhr.send(post);
-          
-                // function execute after request is successful 
-                xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-            console.log(this.responseText);
-            document.getElementById("post-body").value = this.responseText;
-            }
-            };
-            }
-        </script>
-        <script>
-            function openForm() {
-              document.getElementById("myForm").style.display = "block";
-            }
-            
-            function closeForm() {
-              document.getElementById("myForm").style.display = "none";
-            }
-            </script>
-        <script>
             navigator.serviceWorker.register('sw.js');
             if(localStorage.getItem('count')==0){
                 document.getElementById('list').innerText = 'No Tasks Added';
@@ -553,5 +518,39 @@
                 });  
             }
         </script>
+          <script>
+            function run() {
+                var data = document.getElementById("post-body").value;
+                console.log(data);
+                let postObj = { 
+                "sender": data
+                };
+                let post = JSON.stringify(postObj)
+                // Creating Our XMLHttpRequest object 
+                var xhr = new XMLHttpRequest();
+          
+                // Making our connection  
+                var url = 'https://chatbot-engine.azurewebsites.net/messenger';
+                xhr.open('POST', url, true)
+                xhr.setRequestHeader('Content-type', 'application/json; charset=UTF-8')
+                xhr.send(post);
+                // function execute after request is successful 
+                xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log(this.responseText);
+            document.getElementById("post-body").value = this.responseText;
+            }
+            };
+            }
+        </script>
+        <script>
+            function openForm() {
+              document.getElementById("myForm").style.display = "block";
+            }
+            
+            function closeForm() {
+              document.getElementById("myForm").style.display = "none";
+            }
+            </script>
     </body>
 </html>
