@@ -128,17 +128,19 @@
                 color: black;
                 font-size: 14px;
                 font-weight: bold;
-                position: fixed;
-                width: 150px;
+                width: 50px;
                 height: 50px;
-                bottom: 0;
-                right: 0;
-                margin: 10px 10px;
+                margin: 10px 15px;
                 border-radius: 50px;
                 font-family: 'Ubuntu', sans-serif;
                 display: none;
                 cursor: pointer;
                 z-index: 1;
+                transition: 0.5s;
+            }
+            .download:hover{
+                width: 150px;
+                transition: 0.5s;
             }
             .fa-arrow-circle-down{
                 margin: 5px;
@@ -161,22 +163,148 @@
             width: 250px;
             z-index: -1;
         }
+        
+        .open-button {
+        background-color: rgb(230, 89, 8);
+        color: rgb(247, 244, 243);
+        padding: 16px 20px;
+        font-size: 14px;
+        font-weight: bold;
+        border: none;
+        margin: 10px 10px;
+        cursor: pointer;
+        opacity: 0.8;
+        position: fixed;
+        z-index: 1;
+        bottom: 0px;
+        right: 0px;
+        border-radius: 30px;
+        width: 180px;
+        }
+
+        /* The popup chat - hidden by default */
+        .chat-popup {
+        display: none;
+        position: fixed;
+        bottom: 0;
+        right: 15px;
+        z-index: 9;
+        }
+
+        /* Add styles to the form container */
+        .form-container {
+        max-width: 300px;
+        padding: 10px;
+        background-color: white;
+        }
+
+        /* Full-width textarea */
+        .form-container textarea {
+        width: 100%;
+        padding: 15px;
+        margin: 5px 0 22px 0;
+        border: none;
+        background: #f1f1f1;
+        resize: none;
+        min-height: 200px;
+        }
+
+        /* When the textarea gets focus, do something */
+        .form-container textarea:focus {
+        background-color: #ddd;
+        outline: none;
+        }
+
+        /* Set a style for the submit/send button */
+        .form-container .btn {
+        background-color: #04AA6D;
+        color: white;
+        padding: 16px 20px;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        margin-bottom:10px;
+        opacity: 0.8;
+        }
+
+        /* Add a red background color to the cancel button */
+        .form-container .cancel {
+        background-color: red;
+        }
+
+        /* Add some hover effects to buttons */
+        .form-container .btn:hover, .open-button:hover {
+        opacity: 1;
+        }
+        .buttons-nav{
+            display: flex;
+            justify-content:center;
+            align-items: center;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
         </style>
     </head>
     <body>
         <div id="nav">
             <h1>Task Manager</h1>
             <br>
+        <div class="buttons-nav">
         <button onclick="addField()" id="button-add">Add New Task</button>
         <i class="fas fa-info-circle fa-1x" onclick="showhow()"></i>
+        <button class="download" id="installApp"><i class="fas fa-arrow-circle-down"></i></button>
+        </div>
         <br>
-        <button class="download" id="installApp"><i class="fas fa-arrow-circle-down"></i> Install App</button>
+        <button class="open-button" onclick="openForm()">Chat</button>
+        <div class="chat-popup" id="myForm">
+            <div class="form-container">
+            <label for="msg"><b>Chat Message</b></label>
+            <textarea placeholder="Type message Hi or Bye..." id="post-body" name="msg" required></textarea>
+            <button type="submit" class="btn" onclick="run()">Send</button>
+            <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+            </div>
+        </div>
         </div>
         <div class="Explore"></div>
         <br>
         <div id="data">
             <ul id="list"></ul>
         </div>
+        <script>
+            function run() {
+                var data = document.getElementById("post-body").value;
+                console.log(data);
+                let postObj = { 
+                "sender": data
+                };
+                let post = JSON.stringify(postObj)
+                // Creating Our XMLHttpRequest object 
+                var xhr = new XMLHttpRequest();
+          
+                // Making our connection  
+                var url = 'http://localhost:3000/messenger';
+                xhr.open('POST', url, true)
+                xhr.setRequestHeader('Content-type', 'application/json; charset=UTF-8')
+                xhr.send(post);
+          
+                // function execute after request is successful 
+                xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log(this.responseText);
+            document.getElementById("post-body").value = this.responseText;
+            }
+            };
+            }
+        </script>
+        <script>
+            function openForm() {
+              document.getElementById("myForm").style.display = "block";
+            }
+            
+            function closeForm() {
+              document.getElementById("myForm").style.display = "none";
+            }
+            </script>
         <script>
             navigator.serviceWorker.register('sw.js');
             if(localStorage.getItem('count')==0){
