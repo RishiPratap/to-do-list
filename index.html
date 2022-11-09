@@ -50,9 +50,11 @@
                 padding:5px;
                 border-radius:5px;
                 width: 100px;
+                margin-right: 15px;
                 font-weight: bold;
                 color:green;
                 background-color: lightgreen;
+                cursor: pointer;
                 font-family: 'Ubuntu', sans-serif;
             }
             .dell{
@@ -98,9 +100,7 @@
                 margin-top: 5px;
                 font-family: 'Ubuntu', sans-serif;
             }
-            .fas{
-                margin-left: 30px;
-            }
+        
             .notify{
                 padding: 10px;
                 margin-top: 10px;
@@ -168,6 +168,7 @@
         background-color: rgb(230, 89, 8);
         color: rgb(247, 244, 243);
         padding: 16px 20px;
+        text-align: center;
         font-size: 14px;
         font-weight: bold;
         border: none;
@@ -254,8 +255,8 @@
         <i class="fas fa-info-circle fa-1x" onclick="showhow()"></i>
         <button class="download" id="installApp"><i class="fas fa-arrow-circle-down"></i></button>
         </div>
-        <br>
-        <button class="open-button" onclick="openForm()">Chat</button>
+        <br>       
+        <button class="open-button" onclick="openForm()"><i class="fas fa-comment-dots"></i> Chat</button>
         <div class="chat-popup" id="myForm">
             <div class="form-container">
             <label for="msg"><b>Chat Message</b></label>
@@ -282,7 +283,7 @@
                 var xhr = new XMLHttpRequest();
           
                 // Making our connection  
-                var url = 'http://localhost:3000/messenger';
+                var url = 'https://chatbot-engine.azurewebsites.net/messenger';
                 xhr.open('POST', url, true)
                 xhr.setRequestHeader('Content-type', 'application/json; charset=UTF-8')
                 xhr.send(post);
