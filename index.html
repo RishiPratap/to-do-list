@@ -518,29 +518,31 @@
                 });  
             }
         </script>
-          <script>
-            function run() {
-                var data = document.getElementById("post-body").value;
+        <script>
+           async function run() {
+            var data = document.getElementById("post-body").value;
                 console.log(data);
                 let postObj = { 
                 "sender": data
                 };
                 let post = JSON.stringify(postObj)
-                // Creating Our XMLHttpRequest object 
-                var xhr = new XMLHttpRequest();
-          
-                // Making our connection  
-                var url = 'https://chatbot-engine.azurewebsites.net/messenger';
-                xhr.open('POST', url, true)
-                xhr.setRequestHeader('Content-type', 'application/json; charset=UTF-8')
-                xhr.send(post);
-                // function execute after request is successful 
-                xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-            console.log(this.responseText);
-            document.getElementById("post-body").value = this.responseText;
-            }
-            };
+            // POST request using fetch()
+               await fetch("http://localhost:3000/messenger", {
+                    // Adding method type
+                    method: "POST",
+                    // Adding body or contents to send
+                    body: post,
+                    // Adding headers to the request
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8"
+                    }
+                })
+                // Displaying results to console
+                .then(response => response.json())
+                .then(json => {
+                    console.log(json);
+                    document.getElementById("post-body").value = json.receiver;
+                }).catch(err => console.log(err));
             }
         </script>
         <script>
