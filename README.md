@@ -25,6 +25,21 @@ This app will manage your task and schedule and set reminder, and deployed using
 
 <img width="960" alt="Screenshot 2022-10-05 004808" src="https://user-images.githubusercontent.com/72687585/193907032-486f09f5-c8a1-4616-8786-9b1821270692.png">
 
+## 🔥Azure App Services:
+Using `Azure App services` I have deployed the `nodejs server` where i have built a chat bot engine and integrated with Task manager.
+
+<img width="960" alt="image" src="https://user-images.githubusercontent.com/72687585/201082497-1d0219d5-8c6b-483a-8e79-14761b881dd5.png">
+
+<img width="960" alt="image" src="https://user-images.githubusercontent.com/72687585/201083215-e5b2e733-d8e5-460f-8cef-135c4fead7d2.png">
+
+<img width="960" alt="image" src="https://user-images.githubusercontent.com/72687585/201082648-18c38c40-4a73-4c99-ad61-f85eaed1ff8d.png">
+
+## 🔥 Azure Static Web App Services
+Using `Azure Static Web App` service I have deployed my Task manager frontend `HTML CSS JS and assets files and folder`.
+
+<img width="960" alt="image" src="https://user-images.githubusercontent.com/72687585/201083649-f95865e9-9746-4592-a118-7eff7c6dc455.png">
+
+
 ## 🌈Installing (from source code):
 
 * Clone this repository to your local machine.
