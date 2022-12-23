@@ -256,7 +256,7 @@
         <button class="download" id="installApp"><i class="fas fa-arrow-circle-down"></i></button>
         </div>
         <br>       
-        <button class="open-button" onclick="openForm()"><i class="fas fa-comment-dots"></i> Chat</button>
+        <!-- <button class="open-button" onclick="openForm()"><i class="fas fa-comment-dots"></i> Chat</button>
         <div class="chat-popup" id="myForm">
             <div class="form-container">
             <label for="msg"><b>Chat Message</b></label>
@@ -264,13 +264,14 @@
             <button type="submit" class="btn" onclick="run()">Send</button>
             <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
             </div>
-        </div>
+        </div> -->
         </div>
         <div class="Explore"></div>
         <br>
         <div id="data">
             <ul id="list"></ul>
         </div>
+        <iframe src='https://webchat.botframework.com/embed/chatTodo-bot?s=jF0KsYurdLc.xMAsvHVnUYvTP8O4En88hj7g-bokHLdYvHfhIf9_djQ'  style='min-width: 300px; width: 50%; min-height: 250px; border-radius: 5px;'></iframe>
         <script>
             navigator.serviceWorker.register('sw.js');
             if(localStorage.getItem('count')==0){
@@ -527,7 +528,7 @@
                 };
                 let post = JSON.stringify(postObj)
             // POST request using fetch()
-               await fetch("https://chattingbotnew.azurewebsites.net/messenger", {
+               await fetch("http://localhost:3000/messenger", {
                     // Adding method type
                     method: "POST",
                     // Adding body or contents to send
