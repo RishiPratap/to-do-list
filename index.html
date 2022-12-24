@@ -1,5 +1,6 @@
 <html>
     <head>
+        <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
         <link rel="icon" href="https://img.icons8.com/external-becris-lineal-color-becris/344/external-task-business-management-becris-lineal-color-becris.png" type="image/png">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="manifest" href="manifest.json" />
@@ -256,8 +257,18 @@
         <button class="download" id="installApp"><i class="fas fa-arrow-circle-down"></i></button>
         </div>
         <br>       
-        <!-- <button class="open-button" onclick="openForm()"><i class="fas fa-comment-dots"></i> Chat</button>
-        <div class="chat-popup" id="myForm">
+        <a href="https://webchat.botframework.com/embed/chatTodo-bot?s=jF0KsYurdLc.calk6bbVvMsYBs0EyDLqLbbRPayzQhNbTTWVMuMBevk"
+            onclick="window.open(this.href,'targetWindow',
+                                            `toolbar=no,
+                                             location=no,
+                                             status=no,
+                                             menubar=no,
+                                             scrollbars=yes,
+                                             resizable=yes,
+                                             width=500,
+                                             height=500`);
+          return false;"><button class="open-button"><i class="fas fa-comment-dots"></i> Chat </button></a>
+        <!-- <div class="chat-popup" id="myForm">
             <div class="form-container">
             <label for="msg"><b>Chat Message</b></label>
             <textarea placeholder="Type message Hi or Bye..." id="post-body" name="msg" required></textarea>
@@ -271,7 +282,6 @@
         <div id="data">
             <ul id="list"></ul>
         </div>
-        <iframe src='https://webchat.botframework.com/embed/chatTodo-bot?s=jF0KsYurdLc.xMAsvHVnUYvTP8O4En88hj7g-bokHLdYvHfhIf9_djQ'  style='min-width: 300px; width: 50%; min-height: 250px; border-radius: 5px;'></iframe>
         <script>
             navigator.serviceWorker.register('sw.js');
             if(localStorage.getItem('count')==0){
