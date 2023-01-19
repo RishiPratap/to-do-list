@@ -36,6 +36,12 @@ Using `Azure Static Web App` service I have deployed my Task manager frontend `H
 
 <img width="960" alt="image" src="https://user-images.githubusercontent.com/72687585/201083649-f95865e9-9746-4592-a118-7eff7c6dc455.png">
 
+## 🅱️ Azure Bot Services:
+<img width="960" alt="image" src="https://user-images.githubusercontent.com/72687585/213451820-4a28daba-a125-4889-8701-7269f3ac0cbc.png">
+
+## 🕸️Azure Language Studio:
+<img width="960" alt="image" src="https://user-images.githubusercontent.com/72687585/213452231-a818405a-c289-4087-93c7-c8b153e2175c.png">
+
 
 ## 🌈Installing (from source code):
 
